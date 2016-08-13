@@ -1,6 +1,11 @@
 class MessagesController < ApplicationController
 
 	def index
+		@messages = Message.all.order("created_at DESC")
+	end
+
+	def show
+		@message = Message.find(params[:id])
 	end
 
 	def new
@@ -8,7 +13,7 @@ class MessagesController < ApplicationController
 	end
 
 	def create
-		@message = Message.new(mesage_params)
+		@message = Message.new(message_params)
 
 		if @message.save
 			redirect_to root_path
@@ -19,7 +24,7 @@ class MessagesController < ApplicationController
 
 	private
 
-	def mesage_params
+	def message_params
 		params.require(:message).permit(:title, :description)
 	end
 
